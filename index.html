@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Նախագծային կայք</title>
+
+    <style>
+        
+/* Առաջարկների և կարծիքների բաժին */
+.request {
+    margin-top: 35px;
+    padding: 30px;
+    background: rgba(8, 35, 76, .92);
+    border: 1px solid #36cfff77;
+    border-radius: 18px;
+    text-align: center;
+    scroll-margin-top: 100px;
+}
+
+.request h2 {
+    color: var(--cyan);
+    margin-bottom: 15px;
+}
+
+.request p {
+    color: #e1ebff;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.request form {
+    max-width: 550px;
+    margin: auto;
+}
+
+.request input,
+.request textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #36cfff88;
+    border-radius: 10px;
+    background: #061b3b;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.request input:focus,
+.request textarea:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px #36cfff55;
+}
+
+.request textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.request input::placeholder,
+.request textarea::placeholder {
+    color: #b9cde8;
+}
+
+.request button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #087cff, #0753d8);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.request button:hover {
+    background: linear-gradient(135deg, #24c8ff, #087cff);
+    box-shadow: 0 0 20px #087cff88;
+}
+
+#formStatus {
+    margin-top: 15px;
+    color: var(--cyan);
+}
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --blue: #087cff;
+            --cyan: #36cfff;
+            --dark: #061b3b;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--white);
+            background:
+                linear-gradient(rgba(3, 15, 42, .65),
+                                rgba(3, 15, 42, .82)),
+                url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=85")
+                center / cover fixed;
+            min-height: 100vh;
+        }
+
+        /* Վերևի մենյու */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 18px 7%;
+            background: rgba(3, 20, 50, .9);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid #248cff55;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: var(--cyan);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 22px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            color: var(--cyan);
+        }
+
+        /* Գլխավոր հատված */
+        header {
+            text-align: center;
+            padding: 75px 20px 45px;
+        }
+
+        header h1 {
+            font-size: clamp(32px, 5vw, 54px);
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px #168cff;
+        }
+
+        header p {
+            max-width: 750px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #e1efff;
+        }
+
+        .glow-line {
+            width: 140px;
+            height: 4px;
+            margin: 25px auto 0;
+            background: var(--cyan);
+            border-radius: 10px;
+            box-shadow: 0 0 20px var(--cyan);
+        }
+
+        /* Տեղեկատվական քարտեր */
+        main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .section {
+            background: rgba(8, 35, 76, .82);
+            border: 1px solid rgba(67, 175, 255, .7);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 10px 35px #0005;
+            backdrop-filter: blur(12px);
+            transition: transform .35s, box-shadow .35s,
+                        border-color .35s;
+            scroll-margin-top: 100px;
+        }
+
+        .section:hover {
+            transform: translateY(-8px);
+            border-color: var(--cyan);
+            box-shadow: 0 15px 40px #087cff55;
+        }
+
+        .section img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 13px;
+            margin-bottom: 18px;
+            border: 1px solid #ffffff33;
+        }
+
+        .section h2 {
+            font-size: 22px;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #e1ebff;
+            margin-bottom: 15px;
+        }
+
+        /* Կոճակներ */
+        .button {
+            display: inline-block;
+            padding: 13px 18px;
+            margin-top: 5px;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(135deg, #087cff, #0753d8);
+            border: 1px solid #55c9ff88;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: .3s;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #24c8ff, #087cff);
+            box-shadow: 0 0 20px #087cff88;
+        }
+
+        /* Լրացուցիչ տեղեկություն */
+        .about {
+            margin-top: 35px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 18px;
+            background: rgba(8, 35, 76, .82);
+            border: 1px solid #36cfff77;
+            scroll-margin-top: 100px;
+        }
+
+        .about h2 {
+            color: var(--cyan);
+            margin-bottom: 15px;
+        }
+
+        .about p {
+            line-height: 1.9;
+            color: #e1ebff;
+        }
+
+        /* Ներքևի հատված */
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(2, 15, 39, .95);
+            border-top: 1px solid #248cff66;
+            color: #c8ddff;
+            line-height: 2;
+        }
+
+        .top-button {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 99;
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: var(--blue);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #087cff88;
+            transition: .3s;
+        }
+
+        .top-button:hover {
+            background: var(--cyan);
+            transform: translateY(-5px);
+        }
+
+        /* Հեռախոսների համար */
+        @media (max-width: 950px) {
+            .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                justify-content: center;
+                text-align: center;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 14px;
+            }
+
+            header {
+                padding-top: 50px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section img {
+                height: 220px;
+            }
+
+            .section {
+                padding: 16px;
+            }
+
+            body {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">📡 Նախագծային</div>
+
+        <ul>
+            
+            <li><a href="#home">Գլխավոր</a></li>
+            <li><a href="#waves">Էլեկտրամագնիսական ալիքներ</a></li>
+            <li><a href="#internet">Համացանց</a></li>
+            <li><a href="#radio">Ռադիոհաղորդակցություն</a></li>
+            <li><a href="#about">Մեր նախագծի մասին</a></li>
+            <li><a href="#request">Արաջառկնեռ և կարծիքներ</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
+        <h1>Բարի գալուստ մեր կայք</h1>
+
+        <p>
+            Սա մեր նախագծային կայքն է, որտեղ կարող եք
+            ծանոթանալ էլեկտրամագնիսական ալիքներին,
+            համացանցին և ռադիոհաղորդակցությանը։
+        </p>
+
+        <div class="glow-line"></div>
+    </header>
+
+    <main>
+        <div class="cards">
+
+            <!-- 1. Էլեկտրամագնիսական ալիքներ -->
+            <section class="section" id="waves">
+
+                <img
+                    src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=85"
+                    alt="Գիտություն և ալիքներ"
+                    loading="lazy"
+                >
+
+                <h2>1. Էլեկտրամագնիսական ալիքներ</h2>
+
+                <p>
+                    Էլեկտրամագնիսական ալիքները տարածության մեջ
+                    տարածվող էլեկտրական և մագնիսական դաշտերի
+                    տատանումներն են։ Դրանք կարող են տարածվել
+                    նաև վակուումում։ Վակուումում դրանց արագությունը
+                    մոտավորապես 3 × 10⁸ մ/վ է՝ լույսի արագությունը։
+                </p>
+
+                <p>
+                    Դրանց օրինակներ են ռադիոալիքները, միկրոալիքները,
+                    տեսանելի լույսը, ինֆրակարմիր, ուլտրամանուշակագույն,
+                    ռենտգենյան և գամմա ճառագայթները։
+                </p>
+
+                <a
+                    class="button"
+                    href="https://www.youtube.com/watch?v=_hYlB3wqWWY"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ▶ Դիտել տեսանյութը
+                </a>
+            </section>
+
+            <!-- 2. Համացանց -->
+            <section class="section" id="internet">
+
+                <img
+                    src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=85"
+                    alt="Համաշխարհային թվային ցանց"
+                    loading="lazy"
+                >
+
+                <h2>2. Համացանց</h2>
+
+                <p>
+                    Համացանցը միմյանց միացված համակարգիչների,
+                    սերվերների և այլ սարքերի համաշխարհային ցանց է։
+                    Այն հնարավորություն է տալիս արագ փոխանակել
+                    տեղեկություններ, հաղորդագրություններ,
+                    նկարներ և տեսանյութեր։
+                </p>
+
+                <p>
+                    Համացանցի միջոցով կարելի է սովորել առցանց,
+                    օգտվել կայքերից, աշխատել և կապ պահպանել
+                    աշխարհի տարբեր երկրներում գտնվող մարդկանց հետ։
+                    Կարևոր է նաև պահպանել անձնական տվյալների
+                    անվտանգությունը։
+                </p>
+
+                <a
+                    class="button"
+                    href="https://www.youtube.com/watch?v=wQ52H-BlnXg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    🌐 Դիտել տեսանյութը
+                </a>
+            </section>
+
+            <!-- 3. Ռադիոհաղորդակցություն -->
+            <section class="section" id="radio">
+
+                <img
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=85"
+                    alt="Հաղորդակցություն և տեխնոլոգիաներ"
+                    loading="lazy"
+                >
+
+                <h2>3. Ռադիոհաղորդակցություն</h2>
+
+                <p>
+                    Ռադիոհաղորդակցությունը տեղեկությունների
+                    փոխանցման եղանակ է, որի ժամանակ օգտագործվում
+                    են էլեկտրամագնիսական ալիքներ։ Հաղորդիչը
+                    տեղեկությունը վերածում է ռադիոազդանշանի,
+                    իսկ ընդունիչը ստանում և մշակում է այն։
+                </p>
+
+                <p>
+                    Ռադիոհաղորդակցությունն օգտագործվում է
+                    ռադիոյի, հեռուստատեսության, բջջային հեռախոսների,
+                    Wi-Fi ցանցերի, արբանյակային կապի և
+                    նավիգացիոն համակարգերի մեջ։
+                </p>
+
+                <a
+                    class="button"
+                    href="https://www.youtube.com/watch?v=C31yhMIfFTI"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    📡 Դիտել տեսանյութը
+                </a>
+            </section>
+
+        </div>
+
+        <section class="about" id="about">
+            <h2>Մեր նախագծի մասին</h2>
+
+            <p>
+                Մեր նպատակն է ներկայացնել էլեկտրամագնիսական
+                ալիքների, համացանցի և ռադիոհաղորդակցության
+                նշանակությունը ժամանակակից կյանքում։
+                Ուսումնասիրելով այս թեմաները՝ մենք ավելի լավ
+                ենք հասկանում գիտության և տեխնոլոգիաների դերը։
+            </p>
+        </section>
+        
+<section class="request" id="request">
+    <h2>Առաջարկներ և կարծիքներ</h2>
+
+    <p>
+        Ունե՞ք առաջարկ կամ կարծիք մեր նախագծի վերաբերյալ։
+        Գրեք մեզ, մենք ուրախ կլինենք լսել ձեզ։
+    </p>
+
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+          method="POST">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Ձեր անունը"
+            required
+        >
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Ձեր էլեկտրոնային փոստը"
+            required
+        >
+
+        <textarea
+            name="message"
+            placeholder="Գրեք ձեր առաջարկը կամ կարծիքը..."
+            required
+        ></textarea>
+
+        <button type="submit">
+            📩 Ուղարկել
+        </button>
+    </form>
+
+    <p id="formStatus"></p>
+</section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 | Նախագծային կայք</p>
+        <p>Գիտություն • Տեխնոլոգիա • Կապ</p>
+        <p style="font-size:12px; color:#b9cde8;">Կայքը գրանցում է այցելության IP հասցեն և դիտարկիչի տվյալները՝ կայքի այցելությունների մասին ադմինիստրատորին ծանուցելու նպատակով։</p>
+    </footer>
+
+    <button
+        class="top-button"
+        id="topButton"
+        aria-label="Վերադառնալ էջի վերև"
+        title="Վերև"
+    >
+        ↑
+    </button>
+
+    <script>
+        // Վերև վերադառնալու կոճակ
+        const topButton = document.getElementById("topButton");
+
+        topButton.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Մենյուի հղումներն աշխատում են էջի բաժիններով։
+        // Տեսանյութերի կոճակները բացում են YouTube-ը նոր ներդիրում։
+
+        // Քարտերի մեղմ հայտնվելը էկրանին
+        const cards = document.querySelectorAll(".section");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = "1";
+                            entry.target.style.transform = "translateY(0)";
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.08 }
+            );
+
+            cards.forEach(function (card) {
+                card.style.opacity = "0";
+                card.style.transform = "translateY(20px)";
+                card.style.transition =
+                    "opacity .6s ease, transform .6s ease, box-shadow .35s";
+                observer.observe(card);
+            });
+        }
+    </script>
+
+</body>
+</html>
