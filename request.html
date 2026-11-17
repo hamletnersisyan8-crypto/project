@@ -6,74 +6,205 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Կապ մեզ հետ</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f3f4f6;
-      font-family: Arial, sans-serif;
-    }
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
 
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #312e81,
+        #6366f1,
+        #0ea5e9
+    );
+    background-size: 300% 300%;
+    animation: gradientMove 10s ease infinite;
+
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Background animation */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Contact box */
+.contact-box {
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    width: 90%;
+    max-width: 470px;
+
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.5);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.25),
+        0 0 25px rgba(99,102,241,0.15);
+
+    animation: boxAppear 0.9s ease;
+    transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.contact-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+}
+
+@keyframes boxAppear {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #1e1b4b;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 65px;
+    height: 4px;
+    background: linear-gradient(90deg, #6366f1, #0ea5e9);
+    border-radius: 10px;
+    margin: 12px auto 0;
+}
+
+/* Inputs */
+input,
+textarea {
+    width: 100%;
+    padding: 15px 17px;
+    margin-bottom: 18px;
+
+    border: 2px solid #e5e7eb;
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    background: #f8fafc;
+    color: #1e293b;
+
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:hover,
+textarea:hover {
+    border-color: #a5b4fc;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #6366f1;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(99,102,241,0.12);
+    transform: translateY(-2px);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 15px;
+
+    background: linear-gradient(135deg, #6366f1, #4f46e5, #0ea5e9);
+    background-size: 200% 200%;
+
+    color: white;
+    border: none;
+    border-radius: 11px;
+
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+button:hover {
+    background-position: 100% 50%;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(79,70,229,0.35);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Status message */
+#status {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4f46e5;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
     .contact-box {
-      background: white;
-      padding: 35px;
-      width: 90%;
-      max-width: 450px;
-      border-radius: 15px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        padding: 27px 22px;
     }
 
     h2 {
-      text-align: center;
-      color: #222;
-      margin-bottom: 25px;
+        font-size: 24px;
     }
+}
 
-    input, textarea {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
+}
 
-    input:focus, textarea:focus {
-      border-color: #6366f1;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      background: #6366f1;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #4f46e5;
-    }
-
-    #status {
-      text-align: center;
-      margin-top: 15px;
-    }
   </style>
 </head>
 <body>
