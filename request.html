@@ -261,12 +261,61 @@ input, textarea {
 
 select {
      appearance: none;
+     -webkit-appearance: none;
+     width: 100%;
+     min-height: 54px;
+     padding: 15px 50px 15px 17px;
+     border: 1px solid rgba(53,217,255,.28);
+     border-radius: 13px;
+     background-color: rgba(4,17,38,.82);
+     background-image:
+         linear-gradient(45deg, transparent 50%, #35d9ff 50%),
+         linear-gradient(135deg, #35d9ff 50%, transparent 50%),
+         linear-gradient(to right, rgba(53,217,255,.18), rgba(53,217,255,.18));
+     background-position:
+         calc(100% - 22px) 23px,
+         calc(100% - 16px) 23px,
+         calc(100% - 43px) 50%;
+     background-size: 6px 6px, 6px 6px, 1px 25px;
+     background-repeat: no-repeat;
+     color: #35d9ff;
+     font-family: inherit;
+     font-size: 14px;
+     font-weight: 600;
+     letter-spacing: .1px;
+     outline: none;
      cursor: pointer;
+     transition: border-color .25s, box-shadow .25s, background-color .25s, transform .25s;
+}
+
+select:invalid {
+     color: #91a8c7;
+     font-weight: 500;
+}
+
+select:hover {
+     border-color: rgba(53,217,255,.7);
+     background-color: rgba(7,29,57,.98);
+}
+
+select:focus {
+     border-color: #35d9ff;
+     box-shadow: 0 0 0 4px rgba(53,217,255,.12), 0 8px 24px rgba(0,0,0,.18);
+     background-color: #081d39;
 }
 
 select option {
+     padding: 12px;
      background: #0c1d36;
-     color: white;
+     color: #eaf6ff;
+     font-family: 'Noto Sans Armenian', sans-serif;
+     font-size: 14px;
+}
+
+select option:checked {
+     color: #35d9ff;
+     background: #12365b;
+     font-weight: 700;
 }
 
 input::placeholder,
