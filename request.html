@@ -6,32 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Կապ մեզ հետ</title>
   <style>
-    
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px;
-
-    background: linear-gradient(
-        135deg,
-        #0f172a,
-        #312e81,
-        #6366f1,
-        #0ea5e9
-    );
-    background-size: 300% 300%;
-    animation: gradientMove 10s ease infinite;
-
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
-            nav {
+ nav {
             position: sticky;
             top: 0;
             z-index: 100;
@@ -67,7 +42,59 @@ body {
 
         nav a:hover {
             color: var(--cyan);
+        } header {
+            text-align: center;
+            padding: 75px 20px 45px;
         }
+
+        header h1 {
+            font-size: clamp(32px, 5vw, 54px);
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px #168cff;
+        }
+
+        header p {
+            max-width: 750px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #e1efff;
+        }
+
+        .glow-line {
+            width: 140px;
+            height: 4px;
+            margin: 25px auto 0;
+            background: var(--cyan);
+            border-radius: 10px;
+            box-shadow: 0 0 20px var(--cyan);
+        }
+
+    
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #312e81,
+        #6366f1,
+        #0ea5e9
+    );
+    background-size: 300% 300%;
+    animation: gradientMove 10s ease infinite;
+
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
 
 /* Background animation */
 @keyframes gradientMove {
