@@ -259,13 +259,24 @@ input, textarea {
     transition: .3s;
 }
 
+select {
+     appearance: none;
+     cursor: pointer;
+}
+
+select option {
+     background: #0c1d36;
+     color: white;
+}
+
 input::placeholder,
 textarea::placeholder {
     color: #7186a5;
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     border-color: var(--cyan);
     box-shadow: 0 0 0 4px rgba(53,217,255,.09);
     background: rgba(5,24,49,.95);
@@ -444,32 +455,25 @@ footer {
                   method="POST">
 
                 <div class="field">
-                    <label for="name">Անուն</label>
+                    <label for="subject-choice">Ընտրեք թեման</label>
+                    <select id="subject-choice" required>
+                        <option value="" selected disabled>Ընտրեք թեման...</option>
+                        <option value="Էլեկտրամագնիսական ալիքներ">Էլեկտրամագնիսական ալիքներ</option>
+                        <option value="Համացանց">Համացանց</option>
+                        <option value="Ռադիոհաղորդակցություն">Ռադիոհաղորդակցություն</option>
+                        <option value="Առաջարկ կամ կարծիք">Առաջարկ կամ կարծիք</option>
+                        <option value="Հարց նախագծի վերաբերյալ">Հարց նախագծի վերաբերյալ</option>
+                        <option value="other">Այլ․․․</option>
+                    </select>
+                    <input
+                        type="hidden"
+                        id="subject-value"
+                        name="subject">
                     <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Մուտքագրեք ձեր անունը"
-                        required>
-                </div>
-
-                <div class="field">
-                    <label for="email">Էլեկտրոնային հասցե</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="example@gmail.com"
-                        required>
-                </div>
-
-                <div class="field">
-                    <label for="subject">Թեմա</label>
-                    <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        placeholder="Հաղորդագրության թեման">
+                        id="other-subject"
+                        placeholder="Գրեք ձեր առաջարկած թեմայի անունը"
+                        style="display: none; margin-top: 12px;">
                 </div>
 
                 <div class="field">
@@ -501,6 +505,42 @@ footer {
 <footer>
     © 2026 Նախագծային կայք | Բոլոր իրավունքները պաշտպանված են։
 </footer>
+
+<script>
+    const subjectChoice = document.getElementById("subject-choice");
+    const subjectValue = document.getElementById("subject-value");
+    const otherSubject = document.getElementById("other-subject");
+
+    subjectChoice.addEventListener("change", function () {
+        const isOther = this.value === "other";
+
+        otherSubject.style.display = isOther ? "block" : "none";
+        otherSubject.required = isOther;
+
+        if (!isOther) {
+            subjectValue.value = this.value;
+            otherSubject.value = "";
+        } else {
+            subjectValue.value = "";
+            otherSubject.focus();
+        }
+    });
+
+    otherSubject.addEventListener("input", function () {
+        subjectValue.value = this.value.trim();
+    });
+
+    document.querySelector("form").addEventListener("submit", function (event) {
+        if (subjectChoice.value === "other") {
+            subjectValue.value = otherSubject.value.trim();
+
+            if (!subjectValue.value) {
+                event.preventDefault();
+                otherSubject.focus();
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
