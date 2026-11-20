@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ռադիոհաղորդակցության վիրտուալ լաբորատորիա</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <style>
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef3f9;
+    color: #1d2939;
+}
+
+header {
+    background: linear-gradient(120deg, #09203f, #1769aa);
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+section {
+    background: white;
+    margin-bottom: 20px;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px #00000012;
+}
+
+h2 {
+    color: #145b96;
+    margin-bottom: 18px;
+}
+
+.intro p,
+.theory p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.laboratory {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+}
+
+.equipment {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 12px;
+    background: #eaf4ff;
+    border-radius: 12px;
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.device {
+    min-width: 100px;
+}
+
+.device-icon {
+    font-size: 48px;
+    margin: 15px 0;
+}
+
+.device h3 {
+    font-size: 15px;
+}
+
+.device p {
+    font-size: 12px;
+    margin: 8px 0;
+}
+
+.device span {
+    display: inline-block;
+    color: #b42318;
+    font-size: 12px;
+}
+
+.antenna {
+    height: 35px;
+    width: 3px;
+    background: #145b96;
+    margin: auto;
+}
+
+.waves {
+    color: #1676d2;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.wave {
+    width: 45px;
+    height: 45px;
+    border: 2px solid #1689e8;
+    border-radius: 50%;
+    margin: -4px auto;
+    opacity: 0;
+}
+
+.waves.active .wave {
+    animation: pulse 1.5s infinite;
+}
+
+.waves.active .wave2 {
+    animation-delay: 0.4s;
+}
+
+.waves.active .wave3 {
+    animation-delay: 0.8s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    background: #1476c8;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #095b9d;
+}
+
+#stopBtn {
+    background: #d04444;
+}
+
+input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #1476c8;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccd5df;
+    border-radius: 6px;
+}
+
+.controls label {
+    font-size: 14px;
+}
+
+.visualization canvas {
+    width: 100%;
+    height: 260px;
+    display: block;
+    background: #081a30;
+    border-radius: 10px;
+}
+
+#signalInfo {
+    margin-top: 12px;
+    color: #526477;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.result-grid div {
+    padding: 15px;
+    background: #eaf4ff;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result-grid h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.result-grid p {
+    color: #0874c5;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+footer {
+    background: #09203f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+@media (max-width: 750px) {
+    .laboratory {
+        grid-template-columns: 1fr;
+    }
+
+    .equipment {
+        min-height: 210px;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+}
+
+  </style>
+
+<header>
+    <h1>📡 Ռադիոհաղորդակցության լաբորատորիա</h1>
+    <p>Ռադիոազդանշանի փոխանցում և ընդունում</p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2>Լաբորատոր աշխատանքի նպատակը</h2>
+        <p>
+            Ուսումնասիրել ռադիոալիքների առաջացումը,
+            տարածումը, մոդուլացումը և ընդունումը։
+        </p>
+    </section>
+
+    <section class="laboratory">
+
+        <div class="equipment">
+            <div class="device">
+                <div class="antenna"></div>
+                <div class="device-icon">📻</div>
+                <h3>Ռադիոհաղորդիչ</h3>
+                <p>Ազդանշանի փոխանցում</p>
+                <span id="transmitterStatus">Անջատված է</span>
+            </div>
+
+            <div class="waves">
+                <div class="wave wave1"></div>
+                <div class="wave wave2"></div>
+                <div class="wave wave3"></div>
+                <span>Ռադիոալիքներ</span>
+            </div>
+
+            <div class="device">
+                <div class="antenna"></div>
+                <div class="device-icon">📻</div>
+                <h3>Ռադիոընդունիչ</h3>
+                <p>Ազդանշանի ընդունում</p>
+                <span id="receiverStatus">Սպասման ռեժիմ</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <h2>Կառավարման վահանակ</h2>
+
+            <button id="startBtn">▶ Միացնել հաղորդումը</button>
+            <button id="stopBtn">■ Անջատել հաղորդումը</button>
+
+            <label for="frequency">
+                Հաճախականություն:
+                <strong id="frequencyValue">100</strong> kHz
+            </label>
+            <input type="range" id="frequency"
+                   min="10" max="200" value="100">
+
+            <label for="amplitude">
+                Ազդանշանի ամպլիտուդ:
+                <strong id="amplitudeValue">50</strong>%
+            </label>
+            <input type="range" id="amplitude"
+                   min="10" max="100" value="50">
+
+            <label for="distance">
+                Հեռավորություն:
+                <strong id="distanceValue">30</strong> մ
+            </label>
+            <input type="range" id="distance"
+                   min="10" max="100" value="30">
+
+            <label for="noise">
+                Խանգարումներ:
+                <strong id="noiseValue">0</strong>%
+            </label>
+            <input type="range" id="noise"
+                   min="0" max="100" value="0">
+
+            <label for="modulation">Մոդուլացման տեսակ</label>
+            <select id="modulation">
+                <option value="AM">AM - Ամպլիտուդային</option>
+                <option value="none">Առանց մոդուլացման</option>
+            </select>
+        </div>
+
+    </section>
+
+    <section class="visualization">
+        <h2>Ռադիոազդանշանի գրաֆիկական պատկերում</h2>
+        <canvas id="signalCanvas"></canvas>
+        <p id="signalInfo">Ազդանշանը դեռ չի փոխանցվում։</p>
+    </section>
+
+    <section class="results">
+        <h2>Ընդունված ազդանշանի տվյալներ</h2>
+
+        <div class="result-grid">
+            <div>
+                <h3>Հաճախականություն</h3>
+                <p id="resultFrequency">0 kHz</p>
+            </div>
+
+            <div>
+                <h3>Ազդանշանի ուժգնություն</h3>
+                <p id="signalStrength">0%</p>
+            </div>
+
+            <div>
+                <h3>Փոխանցման վիճակ</h3>
+                <p id="connection">Անջատված</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="theory">
+        <h2>Տեսական տեղեկություն</h2>
+        <p>
+            Ռադիոհաղորդակցությունը տեղեկատվության փոխանցումն է
+            էլեկտրամագնիսական ալիքների միջոցով։
+        </p>
+
+        <p>
+            Հաղորդիչը ձևավորում է էլեկտրական ազդանշան,
+            իսկ ալեհավաքը այն ճառագայթում է տարածություն։
+            Ընդունիչի ալեհավաքը որսում է ալիքը և այն
+            վերածում էլեկտրական ազդանշանի։
+        </p>
+
+        <p>
+            AM մոդուլացման դեպքում կրող ալիքի ամպլիտուդը
+            փոփոխվում է՝ համապատասխան փոխանցվող տեղեկատվությանը։
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    <p>Վիրտուալ ֆիզիկայի լաբորատորիա © 2026</p>
+</footer>
+
+<script>
+  
+const canvas = document.getElementById("signalCanvas");
+const ctx = canvas.getContext("2d");
+
+// Փորձի պարամետրեր
+let running = false;
+let time = 0;
+
+const frequency = document.getElementById("frequency");
+const amplitude = document.getElementById("amplitude");
+const distance = document.getElementById("distance");
+const noise = document.getElementById("noise");
+const modulation = document.getElementById("modulation");
+
+// Կառավարման կոճակներ
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+
+// Պարամետրերի ցուցադրում
+frequency.addEventListener("input", updateValues);
+amplitude.addEventListener("input", updateValues);
+distance.addEventListener("input", updateValues);
+noise.addEventListener("input", updateValues);
+modulation.addEventListener("change", updateValues);
+
+startBtn.addEventListener("click", () => {
+    running = true;
+    updateValues();
+});
+
+stopBtn.addEventListener("click", () => {
+    running = false;
+
+    document.getElementById("transmitterStatus").textContent =
+        "Անջատված է";
+
+    document.getElementById("receiverStatus").textContent =
+        "Սպասման ռեժիմ";
+
+    document.getElementById("connection").textContent =
+        "Անջատված";
+
+    document.querySelector(".waves").classList.remove("active");
+
+    document.getElementById("signalInfo").textContent =
+        "Ազդանշանի փոխանցումը դադարեցված է։";
+
+    drawSignal();
+});
+
+// Ստանալ փոխանցվող ազդանշանի տվյալները
+function getSignalData() {
+    const f = Number(frequency.value);
+    const a = Number(amplitude.value);
+    const d = Number(distance.value);
+    const n = Number(noise.value);
+    const mode = modulation.value;
+
+    // Հեռավորությունից կախված պայմանական թուլացում
+    const attenuation = 1 / (1 + d / 30);
+
+    // Ընդունվող ազդանշանի ուժգնություն
+    const strength = Math.round(
+        a * attenuation * (1 - n / 150)
+    );
+
+    return {
+        f,
+        a,
+        d,
+        n,
+        mode,
+        strength: Math.max(0, strength)
+    };
+}
+
+// Թարմացնել տվյալները
+function updateValues() {
+    const data = getSignalData();
+
+    document.getElementById("frequencyValue").textContent =
+        data.f;
+
+    document.getElementById("amplitudeValue").textContent =
+        data.a;
+
+    document.getElementById("distanceValue").textContent =
+        data.d;
+
+    document.getElementById("noiseValue").textContent =
+        data.n;
+
+    document.getElementById("resultFrequency").textContent =
+        running ? data.f + " kHz" : "0 kHz";
+
+    document.getElementById("signalStrength").textContent =
+        running ? data.strength + "%" : "0%";
+
+    if (running) {
+        document.getElementById("transmitterStatus").textContent =
+            "Փոխանցում է";
+
+        document.getElementById("receiverStatus").textContent =
+            "Ազդանշան ընդունված է";
+
+        document.getElementById("connection").textContent =
+            "Միացված";
+
+        document.getElementById("signalInfo").textContent =
+            "Փոխանցվում է " + data.mode +
+            " ազդանշան՝ " + data.f + " kHz հաճախականությամբ։";
+
+        document.querySelector(".waves").classList.add("active");
+    }
+}
+
+// Canvas-ի չափերի հարմարեցում
+function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    drawSignal();
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+// Գրաֆիկի ցանց
+function drawGrid(width, height) {
+    ctx.strokeStyle = "#193651";
+    ctx.lineWidth = 1;
+
+    for (let x = 0; x < width; x += 30) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+    }
+
+    for (let y = 0; y < height; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+    }
+
+    ctx.strokeStyle = "#71869b";
+    ctx.beginPath();
+    ctx.moveTo(0, height / 2);
+    ctx.lineTo(width, height / 2);
+    ctx.stroke();
+}
+
+// Ռադիոազդանշանի գծում
+function drawSignal() {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    if (!width || !height) return;
+
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.fillStyle = "#081a30";
+    ctx.fillRect(0, 0, width, height);
+
+    drawGrid(width, height);
+
+    if (!running) {
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "16px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(
+            "Սկսեք փորձը՝ տեսնելու ռադիոալիքը",
+            width / 2,
+            height / 2 - 15
+        );
+        return;
+    }
+
+    const data = getSignalData();
+
+    const center = height / 2;
+    const maxAmplitude = Math.min(90, height * 0.35);
+    const amp = maxAmplitude * data.a / 100;
+    const cycles = 3 + data.f / 12;
+
+    // Հիմնական կրող ալիք
+    ctx.beginPath();
+    ctx.strokeStyle = "#00d9ff";
+    ctx.lineWidth = 2;
+
+    for (let x = 0; x < width; x++) {
+        const phase = (x / width) * cycles * Math.PI * 2
+            - time;
+
+        let envelope = 1;
+
+        // AM մոդուլացում
+        if (data.mode === "AM") {
+            envelope = 0.25 + 0.75 *
+                (0.5 + 0.5 * Math.sin(
+                    (x / width) * Math.PI * 4 - time * 0.5
+                ));
+        }
+
+        // Պայմանական խանգարումներ
+        const randomNoise =
+            data.n / 100 *
+            (Math.sin(x * 1.7 + time * 3) * 12);
+
+        // Հեռավորությունից կախված ազդանշանի թուլացում
+        const attenuation = 1 / (1 + data.d / 30);
+
+        const y = center -
+            Math.sin(phase) *
+            amp *
+            envelope *
+            attenuation +
+            randomNoise;
+
+        if (x === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    }
+
+    ctx.stroke();
+
+    // AM ազդանշանի ծրար
+    if (data.mode === "AM") {
+        ctx.beginPath();
+        ctx.strokeStyle = "#ffbb55";
+        ctx.lineWidth = 1.5;
+
+        for (let x = 0; x < width; x++) {
+            const envelope = 0.25 + 0.75 *
+                (0.5 + 0.5 * Math.sin(
+                    (x / width) * Math.PI * 4 - time * 0.5
+                ));
+
+            const attenuation = 1 / (1 + data.d / 30);
+
+            const y = center -
+                amp * envelope * attenuation;
+
+            if (x === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        }
+
+        ctx.stroke();
+
+        ctx.beginPath();
+
+        for (let x = 0; x < width; x++) {
+            const envelope = 0.25 + 0.75 *
+                (0.5 + 0.5 * Math.sin(
+                    (x / width) * Math.PI * 4 - time * 0.5
+                ));
+
+            const attenuation = 1 / (1 + data.d / 30);
+
+            const y = center +
+                amp * envelope * attenuation;
+
+            if (x === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        }
+
+        ctx.stroke();
+    }
+
+    // Գրաֆիկի բացատրություն
+    ctx.fillStyle = "#00d9ff";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText("Ռադիոազդանշան", 12, 20);
+
+    if (data.mode === "AM") {
+        ctx.fillStyle = "#ffbb55";
+        ctx.fillText("AM ծրար", 12, 38);
+    }
+}
+
+// Անիմացիայի հիմնական ցիկլ
+function animate() {
+    if (running) {
+        time += 0.06;
+        drawSignal();
+    }
+
+    requestAnimationFrame(animate);
+}
+
+// Սկզբնական գործարկում
+updateValues();
+resizeCanvas();
+animate();
+
+</script>
+</body>
+</html>
